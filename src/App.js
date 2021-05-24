@@ -1,95 +1,83 @@
 import logo from './logo.svg';
 import './App.css';
 import React, {useEffect} from "react";
+import {addToWishlist, fetchProducts, removeFromWishlist} from "./redux";
 import {useDispatch, useSelector} from "react-redux";
-import {
-    setComments, setCommentsError,
-    setCommentsIsLoading,
-    usePostsFetcher, usePostsSetError, usePostsSetLoading
-} from './redux';
 
+const Header = ()=>{
+    const {wishlist} = useSelector(({products}) =>products)
+    const wishlitTotalPrice = wishlist.reduce((acc,el)=>{
+        return (acc+=el.price);
+    },0)
+    return(
+        <>
+        <header style={{
+            display:'flex',
+            justifyContent:"space-between",
+            alignItems:"center"
+        }}>
+            <h2>Our nice shop!</h2>
+            <div style={{
+                display:"flex",
+                alignItems:"center"
+            }}>
+                <h2 style={{marginRight:'20px'}}>cart:{0}</h2>
+                <h2 title={wishlitTotalPrice}>wishlist:{wishlist.length}</h2>
+            </div>
 
-const Comments = () => {
-    const {isLoading, comments, error} = useSelector(({comments}) => comments);
-    const dispatch = useDispatch();
-    const fetchComments = async () => {
-        try {
-            dispatch(setCommentsIsLoading());
-            const response = await fetch('https://jsonplaceholder.typicode.com/comments');
-            const payload = await response.json();
-            dispatch(setComments(payload));
-        } catch (e) {
-            dispatch(setCommentsError('error'));
-        }
-    }
-    useEffect(() => {
-        fetchComments()
-    }, []);
-    if (error) {
-        return <h1>{error}</h1>
-    }
-    if (isLoading) {
-        return (
-            <h1>Loading</h1>
-        )
-    }
-
-    return (
-        <div>
-            {comments.map((comment) => (
-                <p key={comment.id}>{comment.name} - {comment.email} - {comment.body}</p>
-            ))}
-        </div>
-    );
-
+        </header>
+            <hr/>
+        </>
+    )
 }
 
-const Posts = () => {
-    const {isLoading, posts, error} = useSelector(({posts}) => posts);
+const isInWishlist = (wishlist,id) =>!!wishlist.find(el=>el.id===id)
+const Products = ()=>{
+    const {wishlist} = useSelector(({products}) =>products)
 
+    const {products, isProductsLoading} = useSelector(({products})=>products)
+    const dispatch = useDispatch();
 
-    const postFetcher = usePostsFetcher();
-    const postLoading = usePostsSetLoading();
-    const postError = usePostsSetError();
-    const fetchPosts = async () => {
-        try {
-            postLoading();
-            const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-            const payload = await response.json();
-            // dispatch(setPosts(payload));
-            postFetcher(payload);
-        } catch (e) {
-            postError('failed to fetch data');
-        }
+    useEffect(()=>{
+dispatch(fetchProducts(/*{
+    field:'price',
+    oreder:'ASC'
+}*/));
+    },[])
+    if (isProductsLoading){
+        return  <div>LOADING!!!</div>
     }
-    useEffect(() => {
-        fetchPosts()
-    }, []);
-    if (error) {
-        return <h1>{error}</h1>
-    }
-    if (isLoading) {
-        return (
-            <h1>Loading</h1>
-        )
-    }
-
-    return (
+    return(
         <div>
-            {posts.map((post) => (
-                <p key={post.id}>{post.title} - {post.body}</p>
-            ))}
+            {products.map(product =>(
+                <div key={product.id} style={{
+                    width:'70%',
+                    margin:'20px auto'
+                }}>
+                    <button onClick={()=>{
+                     isInWishlist(wishlist,product.id) ? dispatch(removeFromWishlist(product.id))
+                         :dispatch(addToWishlist(product.id));
+                    }}>{isInWishlist(wishlist,product.id) ? 'remove from wishlist' :'add to wishlist'}</button>
+                    <h4>{product.title}
+                        <br/>
+                        Price: {product.price}</h4>
+                    <p>{product.description}</p>
+                    <img style={{
+                        width:'100%'
+                    }} src={product.image} alt="test"/>
+                </div>
+                )
+            )}
         </div>
-    );
-
+    )
 }
 
 
 export default function App() {
     return (
         <div className="App">
-            {/*<Posts/>*/}
-            <Comments/>
+            <Header/>
+            <Products/>
         </div>
     );
 };

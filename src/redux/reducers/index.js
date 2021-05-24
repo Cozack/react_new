@@ -1,8 +1,7 @@
 import {combineReducers} from "redux";
-import {commentsReducer} from './commentsReducer';
-import {postsReducer} from './postsReducer';
+import {productsReducer} from "./productsReducer";
 
 export const rootReducer = combineReducers({
-    posts:postsReducer,
-    comments:commentsReducer
+    products:productsReducer
+
 })
