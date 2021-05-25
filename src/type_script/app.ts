@@ -1,91 +1,59 @@
-// interface IAnimal {
-//     action:string;
-//     info():string;
-// }
-interface IAnimal {
-    action: string;
-
-    info(): string
+abstract class Shape {
+    abstract perimeter():number
+    abstract area():number
 }
 
-
-// class Cat implements IAnimal{
-//     action: string;
-//
-//     info(): string {
-//         return `This is a Cat that can ${this.action}`;
-//     }
-// constructor(action:string,) {
-// }
-// }
-//
-//
-// class Bird implements IAnimal{
-//     action: string;
-//
-//     info(): string {
-//         return `This is a Bird that can ${this.action}`;
-//     }
-//
-// }
-//
-//
-//
-// class Fish implements IAnimal{
-//     action: string;
-//
-//     info(): string {
-//         return `This is a Fish that can ${this.action}`;
-//     }
-//
-// }
-// let newCat = new Cat()
-
-
-class Fish implements IAnimal {
-    action: string
-
-    constructor(action: string) {
-        this.action = action
+class Triangle extends Shape{
+    constructor(private a:number, private b:number,private c:number) {
+        super();
+this.a=a
+this.b=b
+this.c=c
     }
 
-    info() {
-        return `This animal can ${this.action}`
+    area(): number {
+        let p = (this.a+this.b+this.c)/2
+        return Math.sqrt(p*(p-this.a)*(p-this.b)*(p-this.c));
+    }
+    perimeter(): number {
+        return this.a+ this.b+this.c;
     }
 }
 
-let newFish = new Fish('swim')
+let triangleArea = new Triangle(2,4,5)
+let trianglePerimeter = new Triangle(2,4,5)
+let returnedTriangleArea = triangleArea.area();
+let returnedTrianglePerimeter = triangleArea.perimeter();
 
-console.log(newFish.info())
+console.log(returnedTriangleArea);
+console.log(returnedTrianglePerimeter);
 
-class Cat implements IAnimal {
-    action: string
 
-    constructor(action: string) {
-        this.action = action
+
+
+class Rectangle extends Shape{
+    a:number
+    b:number
+    constructor( a:number,  b:number) {
+        super();
+        this.a=a
+        this.b=b
     }
 
-    info() {
-        return `This animal can ${this.action}`
+    area(): number {
+        return this.a*this.b;
     }
+    perimeter(): number {
+        return 2*(this.a+this.b);
+    }
+
 }
+let rectangleArea = new Rectangle(5,13)
+let rectanglePerimeter = new Rectangle(2,8)
+let newRectangleArea = rectangleArea.area();
+let newRectanglePerimeter = rectanglePerimeter.perimeter();
+console.log(newRectangleArea)
+console.log(newRectanglePerimeter)
 
-let newCat = new Cat('run')
 
-console.log(newCat.info())
 
-class Bird implements IAnimal {
-    action: string
-
-    constructor(action: string) {
-        this.action = action
-    }
-
-    info() {
-        return `This animal can ${this.action}`
-    }
-}
-
-let newBird = new Bird('fly')
-
-console.log(newBird.info())
