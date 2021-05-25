@@ -13,7 +13,7 @@ this.c=c
 
     area(): number {
         let p = (this.a+this.b+this.c)/2
-        return Math.sqrt(p*(p-this.a)*(p-this.b)*(p-this.c));
+        return +Math.sqrt(p*(p-this.a)*(p-this.b)*(p-this.c)).toFixed(2);
     }
     perimeter(): number {
         return this.a+ this.b+this.c;
@@ -25,8 +25,8 @@ let trianglePerimeter = new Triangle(2,4,5)
 let returnedTriangleArea = triangleArea.area();
 let returnedTrianglePerimeter = triangleArea.perimeter();
 
-console.log(returnedTriangleArea);
-console.log(returnedTrianglePerimeter);
+// console.log(returnedTriangleArea);
+// console.log(returnedTrianglePerimeter);
 
 
 
@@ -52,8 +52,9 @@ let rectangleArea = new Rectangle(5,13)
 let rectanglePerimeter = new Rectangle(2,8)
 let newRectangleArea = rectangleArea.area();
 let newRectanglePerimeter = rectanglePerimeter.perimeter();
-console.log(newRectangleArea)
-console.log(newRectanglePerimeter)
+// console.log(newRectangleArea)
+// console.log(newRectanglePerimeter)
 
 
-
+let figures = [returnedTriangleArea,returnedTrianglePerimeter,newRectangleArea,newRectanglePerimeter]
+figures.forEach( value => console.log(value))
