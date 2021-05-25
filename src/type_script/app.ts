@@ -1,51 +1,91 @@
-// Створити такі класи:
-//     1) Депутат
-// - імя
-// - вік
-// - стать
-// - ступінь чесності (0-100)
-// - мінімальна сума хабаря
-enum EGenders{
-    MALE="male",
-    FEMALE='female',
+// interface IAnimal {
+//     action:string;
+//     info():string;
+// }
+interface IAnimal {
+    action: string;
+
+    info(): string
 }
 
-interface IDeputy {
-    name:string;
-    age:number;
-    gender:EGenders;
-    honesty:Function;
-    bribe?:Function;
+
+// class Cat implements IAnimal{
+//     action: string;
+//
+//     info(): string {
+//         return `This is a Cat that can ${this.action}`;
+//     }
+// constructor(action:string,) {
+// }
+// }
+//
+//
+// class Bird implements IAnimal{
+//     action: string;
+//
+//     info(): string {
+//         return `This is a Bird that can ${this.action}`;
+//     }
+//
+// }
+//
+//
+//
+// class Fish implements IAnimal{
+//     action: string;
+//
+//     info(): string {
+//         return `This is a Fish that can ${this.action}`;
+//     }
+//
+// }
+// let newCat = new Cat()
+
+
+class Fish implements IAnimal {
+    action: string
+
+    constructor(action: string) {
+        this.action = action
+    }
+
+    info() {
+        return `This animal can ${this.action}`
+    }
 }
 
-// 2) Партія
-// - назва
-// - голова (Депутат)
-// - члени партії (Масив депатутатів)
-//
-// 3) Верхрвна рада
-// - масив партій
-// - решті полів на вибір
-//
-// Мають бути присутні такі можливості:
-//     - додати\видалити фракцію
-// - вивести всі фракції
-// - вивести конкретну фракцію
-// - додати\видалити депутата з фракції
-// - вивести всіх хабарників фракції
-// - вивести найбільшого хабарника у фрації
-// - вивести найбільшого хабарника верховної ради
-// - вивести фсіх депутатів фракції
-// - спробувати дати взятку. Чим чесніший депутат тим склідніше дати йому хабаря.
-//     Дача хабаря має мати 3 стани
-// - не успішна
-// - успішна
-// - вгається
-//
-// Якщо сума взяти менша за мінімальку, тоді хабарь дати не можливо
-// Сума при якій депутат перестає вагатись рівна "мінімальна сума * % чесності".
-//     Тобто, якщо депутат чесний на 10% і сума взяти рівна 1000, а видаєте 1200, то депатут перестає вагатись,
-//     та бере хабар.
-//     Але якщо при таких самих усовах хабар складає 1050, то він буде вагатись.
-//
-// !!! Хабарником рахується людина, в якої рівень чесності нижчий за 50 !!!
+let newFish = new Fish('swim')
+
+console.log(newFish.info())
+
+class Cat implements IAnimal {
+    action: string
+
+    constructor(action: string) {
+        this.action = action
+    }
+
+    info() {
+        return `This animal can ${this.action}`
+    }
+}
+
+let newCat = new Cat('run')
+
+console.log(newCat.info())
+
+class Bird implements IAnimal {
+    action: string
+
+    constructor(action: string) {
+        this.action = action
+    }
+
+    info() {
+        return `This animal can ${this.action}`
+    }
+}
+
+let newBird = new Bird('fly')
+
+console.log(newBird.info())
